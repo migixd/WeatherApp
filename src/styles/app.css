@@ -1,0 +1,141 @@
+/* App-specific component styles for WeatherApp */
+
+body {
+  margin: 0;
+  background: var(--color-neutral-200);
+}
+
+.app-phone {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding: var(--space-5) var(--space-4) var(--space-7);
+  box-sizing: border-box;
+}
+
+/* --- Icon button (header settings button) --- */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: none;
+  background: var(--color-neutral-100);
+  color: var(--color-text);
+  cursor: pointer;
+}
+.icon-btn:hover {
+  background: var(--color-accent-100);
+  color: var(--color-accent-700);
+}
+.icon-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* --- Menu grid (2x2 tiles on Home) --- */
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+/* --- Menu tiles (2x2 grid on Home) --- */
+.menu-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--color-neutral-100);
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  color: var(--color-text);
+}
+.menu-tile:hover {
+  background: var(--color-accent-100);
+}
+.menu-tile:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.tile-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  background: var(--color-accent-2-200);
+  color: var(--color-accent-2-800);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Weather icon circle (Home hero + city cards) --- */
+.weather-icon-circle {
+  width: 96px;
+  height: 96px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* --- Home layout helpers --- */
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+}
+
+.home-header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-header-label {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-neutral-700);
+}
+
+.home-header-city {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  color: var(--color-text);
+}
+
+.weather-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-7) 0 var(--space-6);
+}
+
+.weather-hero-temp {
+  font-family: var(--font-heading);
+  font-size: 64px;
+  line-height: 1;
+  color: var(--color-text);
+}
+
+.weather-hero-condition {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--color-neutral-700);
+}
+
+.tile-label {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+}
