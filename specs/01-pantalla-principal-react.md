@@ -1,6 +1,6 @@
 # SPEC 01 — Pantalla principal de WeatherApp en React
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Fecha:** 2026-09-15
 > **Objetivo:** Recrear la pantalla principal del prototipo visual de WeatherApp como una app React + Vite, manteniendo el layout, colores y estructura de `Plantilla-app-clima-HTML/index.html`.
 
