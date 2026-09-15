@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-04b84066-2d3b-42e5-a624-69778bedb88b/styles.css">
+  <script src="_ds/organic-04b84066-2d3b-42e5-a624-69778bedb88b/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { margin: 0; background: var(--color-neutral-200); }
+    a { color: var(--color-accent-700); }
+    a:hover { color: var(--color-accent-900); }
+    .app-phone { width: 100%; max-width: 420px; margin: 0 auto; min-height: 100vh; background: var(--color-bg); padding: var(--space-5) var(--space-4) var(--space-7); box-sizing: border-box; }
+    .icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 999px; border: none; background: var(--color-neutral-100); color: var(--color-text); cursor: pointer; }
+    .icon-btn:hover { background: var(--color-accent-100); color: var(--color-accent-700); }
+    .icon-btn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+    .menu-tile { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); padding: var(--space-4); border-radius: var(--radius-lg); background: var(--color-neutral-100); border: none; cursor: pointer; text-align: center; }
+    .menu-tile:hover { background: var(--color-accent-100); }
+    .menu-tile:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+    .menu-tile .tile-icon { width: 52px; height: 52px; border-radius: 999px; background: var(--color-accent-2-200); color: var(--color-accent-2-800); display: flex; align-items: center; justify-content: center; }
+    .weather-icon-circle { width: 56px; height: 56px; border-radius: 999px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .city-card { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); }
+    .row-actions { display: flex; align-items: center; gap: var(--space-2); margin-left: auto; }
+    .back-row { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-5); }
+  </style>
+</helmet>
+<div class="app-phone" data-screen-label="{{ vals.screenLabel }}">
+
+  <sc-if value="{{ vals.isHome }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-6)">
+        <div>
+          <div style="font-family:var(--font-body);font-size:14px;color:var(--color-neutral-700)">Ciudad predeterminada</div>
+          <div style="font-family:var(--font-heading);font-size:26px;color:var(--color-text)">{{ vals.defaultCity.name }}</div>
+        </div>
+        <button class="icon-btn" onClick="{{ vals.goSettings }}" aria-label="Ajustes"><i data-lucide="settings" style="width:20px;height:20px"></i></button>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);padding:var(--space-7) 0 var(--space-6)">
+        <div class="weather-icon-circle" style="width:96px;height:96px;background:{{ vals.defaultCity.iconBg }};color:{{ vals.defaultCity.iconFg }}">
+          <i data-lucide="{{ vals.defaultCity.icon }}" style="width:48px;height:48px"></i>
+        </div>
+        <div style="font-family:var(--font-heading);font-size:64px;line-height:1;color:var(--color-text)">{{ vals.defaultCity.tempDisplay }}</div>
+        <div style="font-family:var(--font-body);font-size:16px;color:var(--color-neutral-700)">{{ vals.defaultCity.condition }}</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3)">
+        <button class="menu-tile" onClick="{{ vals.goCities }}">
+          <span class="tile-icon"><i data-lucide="cloud-sun" style="width:24px;height:24px"></i></span>
+          <span style="font-family:var(--font-body);font-size:14px;font-weight:600">Todas las ciudades</span>
+        </button>
+        <button class="menu-tile" onClick="{{ vals.goSearch }}">
+          <span class="tile-icon"><i data-lucide="search" style="width:24px;height:24px"></i></span>
+          <span style="font-family:var(--font-body);font-size:14px;font-weight:600">Buscar y agregar</span>
+        </button>
+        <button class="menu-tile" onClick="{{ vals.goDelete }}">
+          <span class="tile-icon"><i data-lucide="trash-2" style="width:24px;height:24px"></i></span>
+          <span style="font-family:var(--font-body);font-size:14px;font-weight:600">Eliminar ciudad</span>
+        </button>
+        <button class="menu-tile" onClick="{{ vals.goSetDefault }}">
+          <span class="tile-icon"><i data-lucide="star" style="width:24px;height:24px"></i></span>
+          <span style="font-family:var(--font-body);font-size:14px;font-weight:600">Ciudad predeterminada</span>
+        </button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vals.isCities }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div class="back-row">
+        <button class="icon-btn" onClick="{{ vals.goHome }}" aria-label="Volver"><i data-lucide="arrow-left" style="width:20px;height:20px"></i></button>
+        <div style="font-family:var(--font-heading);font-size:22px;color:var(--color-text)">Todas las ciudades</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+        <sc-for list="{{ vals.cities }}" as="c" hint-placeholder-count="3">
+          <div class="card elev-sm city-card">
+            <div class="weather-icon-circle" style="background:{{ c.iconBg }};color:{{ c.iconFg }}">
+              <i data-lucide="{{ c.icon }}" style="width:26px;height:26px"></i>
+            </div>
+            <div style="flex:1">
+              <div style="font-family:var(--font-heading);font-size:18px;color:var(--color-text)">{{ c.name }}</div>
+              <div style="font-family:var(--font-body);font-size:13px;color:var(--color-neutral-700)">{{ c.condition }}</div>
+            </div>
+            <div style="font-family:var(--font-heading);font-size:24px;color:var(--color-text)">{{ c.tempDisplay }}</div>
+            <sc-if value="{{ c.isDefault }}" hint-placeholder-val="{{ false }}">
+              <span class="tag tag-accent-2" style="margin-left:var(--space-2)">Predeterminada</span>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <button class="btn btn-primary btn-block" style="margin-top:var(--space-5)" onClick="{{ vals.goSearch }}">
+        <i data-lucide="plus" style="width:18px;height:18px"></i> Agregar ciudad
+      </button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vals.isSearch }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div class="back-row">
+        <button class="icon-btn" onClick="{{ vals.goCities }}" aria-label="Volver"><i data-lucide="arrow-left" style="width:20px;height:20px"></i></button>
+        <div style="font-family:var(--font-heading);font-size:22px;color:var(--color-text)">Buscar y agregar</div>
+      </div>
+      <div class="field" style="margin-bottom:var(--space-5)">
+        <label for="citySearch">Ciudad</label>
+        <input id="citySearch" class="input" type="text" placeholder="Escribe el nombre de una ciudad" value="{{ vals.searchQuery }}" onChange="{{ vals.onSearchChange }}">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+        <sc-for list="{{ vals.searchResults }}" as="r" hint-placeholder-count="3">
+          <div class="card elev-sm" style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3)">
+            <div style="flex:1">
+              <div style="font-family:var(--font-heading);font-size:17px;color:var(--color-text)">{{ r.name }}</div>
+              <div style="font-family:var(--font-body);font-size:13px;color:var(--color-neutral-700)">{{ r.state }}</div>
+            </div>
+            <sc-if value="{{ r.added }}" hint-placeholder-val="{{ false }}">
+              <span class="tag tag-neutral">Agregada</span>
+            </sc-if>
+            <sc-if value="{{ r.notAdded }}" hint-placeholder-val="{{ true }}">
+              <button class="btn btn-secondary" onClick="{{ r.onAdd }}">Agregar</button>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vals.isDelete }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div class="back-row">
+        <button class="icon-btn" onClick="{{ vals.goHome }}" aria-label="Volver"><i data-lucide="arrow-left" style="width:20px;height:20px"></i></button>
+        <div style="font-family:var(--font-heading);font-size:22px;color:var(--color-text)">Eliminar ciudad</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+        <sc-for list="{{ vals.cities }}" as="c" hint-placeholder-count="3">
+          <div class="card elev-sm city-card">
+            <div class="weather-icon-circle" style="width:44px;height:44px;background:{{ c.iconBg }};color:{{ c.iconFg }}">
+              <i data-lucide="{{ c.icon }}" style="width:22px;height:22px"></i>
+            </div>
+            <div style="flex:1">
+              <div style="font-family:var(--font-heading);font-size:17px;color:var(--color-text)">{{ c.name }}</div>
+              <sc-if value="{{ c.isDefault }}" hint-placeholder-val="{{ false }}">
+                <div style="font-family:var(--font-body);font-size:12px;color:var(--color-accent-700)">No se puede eliminar la predeterminada</div>
+              </sc-if>
+            </div>
+            <button class="btn-icon icon-btn" disabled="{{ c.isDefault }}" onClick="{{ c.onDelete }}" aria-label="Eliminar {{ c.name }}" style="background:var(--color-neutral-100);color:var(--color-accent-700)">
+              <i data-lucide="trash-2" style="width:20px;height:20px"></i>
+            </button>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vals.isSetDefault }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div class="back-row">
+        <button class="icon-btn" onClick="{{ vals.goHome }}" aria-label="Volver"><i data-lucide="arrow-left" style="width:20px;height:20px"></i></button>
+        <div style="font-family:var(--font-heading);font-size:22px;color:var(--color-text)">Ciudad predeterminada</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+        <sc-for list="{{ vals.cities }}" as="c" hint-placeholder-count="3">
+          <button onClick="{{ c.onSetDefault }}" class="card city-card" style="width:100%;text-align:left;border:2px solid {{ c.borderColor }};cursor:pointer;background:var(--color-surface,var(--color-bg))">
+            <div class="weather-icon-circle" style="width:44px;height:44px;background:{{ c.iconBg }};color:{{ c.iconFg }}">
+              <i data-lucide="{{ c.icon }}" style="width:22px;height:22px"></i>
+            </div>
+            <div style="flex:1;font-family:var(--font-heading);font-size:17px;color:var(--color-text)">{{ c.name }}</div>
+            <sc-if value="{{ c.isDefault }}" hint-placeholder-val="{{ false }}">
+              <i data-lucide="check-circle-2" style="width:22px;height:22px;color:var(--color-accent-700)"></i>
+            </sc-if>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ vals.isSettings }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div class="back-row">
+        <button class="icon-btn" onClick="{{ vals.goHome }}" aria-label="Volver"><i data-lucide="arrow-left" style="width:20px;height:20px"></i></button>
+        <div style="font-family:var(--font-heading);font-size:22px;color:var(--color-text)">Ajustes</div>
+      </div>
+      <div class="field">
+        <label>Unidad de temperatura</label>
+        <div class="seg" role="radiogroup" aria-label="Unidad de temperatura">
+          <button type="button" class="seg-opt {{ vals.cActiveClass }}" onClick="{{ vals.setC }}">°C</button>
+          <button type="button" class="seg-opt {{ vals.fActiveClass }}" onClick="{{ vals.setF }}">°F</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 420, &quot;height&quot;: 860}, &quot;initialScreen&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;home&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;home&quot;, &quot;cities&quot;, &quot;search&quot;, &quot;delete&quot;, &quot;setDefault&quot;, &quot;settings&quot;]}, &quot;tempUnit&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;C&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;C&quot;, &quot;F&quot;]}}">
+const CATALOG = [
+  { id: 'chihuahua', name: 'Chihuahua', state: 'Chihuahua', tempC: 34, condition: 'Soleado', icon: 'sun', iconBg: 'var(--color-accent-200)', iconFg: 'var(--color-accent-800)' },
+  { id: 'delicias', name: 'Delicias', state: 'Chihuahua', tempC: 31, condition: 'Parcialmente nublado', icon: 'cloud-sun', iconBg: 'var(--color-accent-2-200)', iconFg: 'var(--color-accent-2-800)' },
+  { id: 'parral', name: 'Hidalgo del Parral', state: 'Chihuahua', tempC: 24, condition: 'Nublado', icon: 'cloud', iconBg: 'var(--color-neutral-200)', iconFg: 'var(--color-neutral-700)' },
+  { id: 'juarez', name: 'Ciudad Juárez', state: 'Chihuahua', tempC: 36, condition: 'Soleado', icon: 'sun', iconBg: 'var(--color-accent-200)', iconFg: 'var(--color-accent-800)' },
+  { id: 'cuauhtemoc', name: 'Cuauhtémoc', state: 'Chihuahua', tempC: 22, condition: 'Lluvia ligera', icon: 'cloud-rain', iconBg: 'var(--color-neutral-200)', iconFg: 'var(--color-neutral-700)' },
+];
+
+class Component extends DCLogic {
+  state = {
+    screen: this.props.initialScreen || 'home',
+    unit: this.props.tempUnit || 'C',
+    cityIds: ['chihuahua', 'delicias', 'parral'],
+    defaultId: 'chihuahua',
+    searchQuery: '',
+  };
+
+  componentDidMount() { this.refreshIcons(); }
+  componentDidUpdate() { this.refreshIcons(); }
+  refreshIcons() { if (window.lucide) window.lucide.createIcons(); }
+
+  goTo(screen) { this.setState({ screen }); }
+  formatTemp(tempC) {
+    if (this.state.unit === 'F') return Math.round(tempC * 9 / 5 + 32) + '°F';
+    return Math.round(tempC) + '°C';
+  }
+
+  renderVals() {
+    const { screen, unit, cityIds, defaultId, searchQuery } = this.state;
+    const mkCity = (base) => ({
+      ...base,
+      tempDisplay: this.formatTemp(base.tempC),
+      isDefault: base.id === defaultId,
+      borderColor: base.id === defaultId ? 'var(--color-accent-600)' : 'var(--color-neutral-200)',
+      onDelete: () => { if (base.id !== defaultId) this.setState(s => ({ cityIds: s.cityIds.filter(id => id !== base.id) })); },
+      onSetDefault: () => this.setState({ defaultId: base.id }),
+    });
+
+    const cities = cityIds.map(id => mkCity(CATALOG.find(c => c.id === id)));
+    const defaultCity = mkCity(CATALOG.find(c => c.id === defaultId));
+
+    const q = searchQuery.trim().toLowerCase();
+    const searchResults = CATALOG
+      .filter(c => !q || c.name.toLowerCase().includes(q))
+      .map(c => {
+        const added = cityIds.includes(c.id);
+        return {
+          ...c,
+          added,
+          notAdded: !added,
+          onAdd: () => this.setState(s => ({ cityIds: [...s.cityIds, c.id], screen: 'cities' })),
+        };
+      });
+
+    return { vals: {
+      screenLabel: screen,
+      isHome: screen === 'home', isCities: screen === 'cities', isSearch: screen === 'search',
+      isDelete: screen === 'delete', isSetDefault: screen === 'setDefault', isSettings: screen === 'settings',
+      goHome: () => this.goTo('home'), goCities: () => this.goTo('cities'), goSearch: () => this.goTo('search'),
+      goDelete: () => this.goTo('delete'), goSetDefault: () => this.goTo('setDefault'), goSettings: () => this.goTo('settings'),
+      defaultCity, cities, searchResults, searchQuery,
+      onSearchChange: (e) => this.setState({ searchQuery: e.target.value }),
+      cActiveClass: unit === 'C' ? 'active' : '', fActiveClass: unit === 'F' ? 'active' : '',
+      setC: () => this.setState({ unit: 'C' }), setF: () => this.setState({ unit: 'F' }),
+    } };
+  }
+}
+
+</script>
+</body>
+</html>
