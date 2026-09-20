@@ -4,7 +4,7 @@ import BuscadorCiudad from './BuscadorCiudad.jsx'
 import TarjetaClima from './TarjetaClima.jsx'
 import { geocodeCity, fetchCurrentWeather } from '../data/weatherApi.js'
 
-function SearchScreen({ onBack }) {
+function SearchScreen({ onBack, onSaveDefault }) {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
@@ -20,7 +20,7 @@ function SearchScreen({ onBack }) {
         return
       }
       const weather = await fetchCurrentWeather(geo.latitude, geo.longitude)
-      setResult({ name: geo.name, tempC: weather.tempC })
+      setResult({ ...geo, tempC: weather.tempC })
     } catch {
       setError('Ocurrió un error al obtener el clima. Intenta de nuevo.')
     } finally {
@@ -37,7 +37,13 @@ function SearchScreen({ onBack }) {
         <div className="back-row-title">Buscar y agregar</div>
       </div>
       <BuscadorCiudad loading={loading} onSearch={handleSearch} />
-      {result && <TarjetaClima name={result.name} tempC={result.tempC} />}
+      {result && (
+        <TarjetaClima
+          name={result.name}
+          tempC={result.tempC}
+          onSaveDefault={() => onSaveDefault(result)}
+        />
+      )}
       {error && <div className="search-error">{error}</div>}
     </div>
   )

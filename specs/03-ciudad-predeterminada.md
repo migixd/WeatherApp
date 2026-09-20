@@ -2,7 +2,7 @@
 
 > **Estado:** Aprobado
 > **Depende de:** SPEC 01, SPEC 02
-> **Fecha:** 2026-09-20
+> **Fecha:** 2026-09-19
 > **Objetivo:** Agregar a WeatherApp un bloque CiudadPorDefecto que muestre el clima real de la ciudad default guardada, persistida dentro de una colección de ciudades en localStorage y definida desde el resultado de una búsqueda.
 
 ## Scope

@@ -1,10 +1,7 @@
-import { Settings, CloudSun, Search, Trash2, Star } from 'lucide-react'
-import { getDefaultCity } from '../data/cities.js'
+import { CloudSun, Search, Trash2, Star } from 'lucide-react'
+import CiudadPorDefecto from './CiudadPorDefecto.jsx'
 
-function Home({ onSearchClick }) {
-  const city = getDefaultCity()
-  const { icon: Icon, iconBg, iconFg } = city
-
+function Home({ onSearchClick, defaultCity }) {
   const tiles = [
     { icon: CloudSun, label: 'Todas las ciudades' },
     { icon: Search, label: 'Buscar y agregar', onClick: onSearchClick },
@@ -14,28 +11,7 @@ function Home({ onSearchClick }) {
 
   return (
     <div className="app-phone">
-      <header className="home-header">
-        <div className="home-header-text">
-          <span className="home-header-label">Ciudad predeterminada</span>
-          <span className="home-header-city">{city.name}</span>
-        </div>
-        <button className="icon-btn" type="button" aria-label="Ajustes">
-          <Settings size={20} />
-        </button>
-      </header>
-
-      <section className="weather-hero">
-        <div
-          className="weather-icon-circle"
-          style={{ background: iconBg, color: iconFg }}
-          aria-hidden="true"
-        >
-          <Icon size={48} />
-        </div>
-        <div className="weather-hero-temp">{city.tempC}°C</div>
-        <div className="weather-hero-condition">{city.condition}</div>
-      </section>
-
+      <CiudadPorDefecto city={defaultCity} />
       <div className="menu-grid">
         {tiles.map((tile) => {
           const TileIcon = tile.icon
