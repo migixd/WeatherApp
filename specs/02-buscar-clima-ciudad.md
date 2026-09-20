@@ -1,6 +1,6 @@
 # SPEC 02 — Buscar el clima de una ciudad
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 01
 > **Fecha:** 2026-09-19
 > **Objetivo:** Agregar a WeatherApp una pantalla de búsqueda que, usando la Geocoding API y luego la OpenMeteo API, muestre en una tarjeta el clima actual de una ciudad buscada por su nombre.
