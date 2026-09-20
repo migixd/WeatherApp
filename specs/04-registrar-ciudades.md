@@ -1,6 +1,6 @@
 # SPEC 04 — Registrar y gestionar ciudades
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 01, SPEC 02, SPEC 03
 > **Fecha:** 2026-09-19
 > **Objetivo:** Agregar a WeatherApp la funcionalidad de registrar, listar, eliminar y cambiar la ciudad predeterminada, completando la navegación de las pantallas secundarias del prototipo visual.

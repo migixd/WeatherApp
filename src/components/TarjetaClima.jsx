@@ -1,13 +1,15 @@
-function TarjetaClima({ name, tempC, onSaveDefault }) {
+function TarjetaClima({ name, tempC, isAdded, onAdd }) {
   return (
     <div className="card elev-sm weather-result-card">
       <div className="weather-result-info">
         <div className="weather-result-name">{name}</div>
         <div className="weather-result-temp">{tempC}°C</div>
       </div>
-      {onSaveDefault && (
-        <button className="btn btn-secondary" type="button" onClick={onSaveDefault}>
-          Guardar como predeterminada
+      {isAdded ? (
+        <span className="tag tag-neutral">Agregada</span>
+      ) : (
+        <button className="btn btn-secondary" type="button" onClick={onAdd}>
+          Agregar
         </button>
       )}
     </div>

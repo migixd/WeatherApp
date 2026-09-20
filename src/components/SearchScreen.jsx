@@ -4,10 +4,12 @@ import BuscadorCiudad from './BuscadorCiudad.jsx'
 import TarjetaClima from './TarjetaClima.jsx'
 import { geocodeCity, fetchCurrentWeather } from '../data/weatherApi.js'
 
-function SearchScreen({ onBack, onSaveDefault }) {
+function SearchScreen({ onBack, onAddCity, cities }) {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
+
+  const isAdded = result ? cities.some((c) => c.id === result.id) : false
 
   const handleSearch = async (query) => {
     setLoading(true)
@@ -41,7 +43,8 @@ function SearchScreen({ onBack, onSaveDefault }) {
         <TarjetaClima
           name={result.name}
           tempC={result.tempC}
-          onSaveDefault={() => onSaveDefault(result)}
+          isAdded={isAdded}
+          onAdd={() => onAddCity(result)}
         />
       )}
       {error && <div className="search-error">{error}</div>}

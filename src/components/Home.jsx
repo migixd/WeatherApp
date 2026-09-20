@@ -1,12 +1,12 @@
 import { CloudSun, Search, Trash2, Star } from 'lucide-react'
 import CiudadPorDefecto from './CiudadPorDefecto.jsx'
 
-function Home({ onSearchClick, defaultCity }) {
+function Home({ onSearchClick, onCitiesClick, onDeleteClick, onSetDefaultClick, defaultCity }) {
   const tiles = [
-    { icon: CloudSun, label: 'Todas las ciudades' },
+    { icon: CloudSun, label: 'Todas las ciudades', onClick: onCitiesClick },
     { icon: Search, label: 'Buscar y agregar', onClick: onSearchClick },
-    { icon: Trash2, label: 'Eliminar ciudad' },
-    { icon: Star, label: 'Ciudad predeterminada' },
+    { icon: Trash2, label: 'Eliminar ciudad', onClick: onDeleteClick },
+    { icon: Star, label: 'Ciudad predeterminada', onClick: onSetDefaultClick },
   ]
 
   return (
