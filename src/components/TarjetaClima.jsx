@@ -1,9 +1,11 @@
-function TarjetaClima({ name, tempC, isAdded, onAdd }) {
+import { formatTemperature } from '../data/temperature.js'
+
+function TarjetaClima({ name, tempC, isAdded, onAdd, unidadTemperatura }) {
   return (
     <div className="card elev-sm weather-result-card">
       <div className="weather-result-info">
         <div className="weather-result-name">{name}</div>
-        <div className="weather-result-temp">{tempC}°C</div>
+        <div className="weather-result-temp">{formatTemperature(tempC, unidadTemperatura)}</div>
       </div>
       {isAdded ? (
         <span className="tag tag-neutral">Agregada</span>

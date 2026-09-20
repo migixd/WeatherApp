@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { ArrowLeft, Plus } from 'lucide-react'
 import { fetchCurrentWeather } from '../data/weatherApi.js'
+import { formatTemperature } from '../data/temperature.js'
 
-function CityCard({ city, isDefault }) {
+function CityCard({ city, isDefault, unidadTemperatura }) {
   const [weather, setWeather] = useState(null)
 
   useEffect(() => {
@@ -28,13 +29,13 @@ function CityCard({ city, isDefault }) {
         <div className="city-card-name">{city.name}</div>
         {condition && <div className="city-card-condition">{condition}</div>}
       </div>
-      {tempC != null && <div className="city-card-temp">{tempC}°C</div>}
+      {tempC != null && <div className="city-card-temp">{formatTemperature(tempC, unidadTemperatura)}</div>}
       {isDefault && <span className="tag tag-accent-2">Predeterminada</span>}
     </div>
   )
 }
 
-function ListaCiudades({ cities, defaultCityId, onBack, onAddCityClick }) {
+function ListaCiudades({ cities, defaultCityId, onBack, onAddCityClick, unidadTemperatura }) {
   return (
     <div>
       <div className="back-row">
@@ -49,6 +50,7 @@ function ListaCiudades({ cities, defaultCityId, onBack, onAddCityClick }) {
             key={city.id}
             city={city}
             isDefault={city.id === defaultCityId}
+            unidadTemperatura={unidadTemperatura}
           />
         ))}
       </div>

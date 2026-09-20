@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Settings, RotateCcw } from 'lucide-react'
 import { fetchCurrentWeather } from '../data/weatherApi.js'
+import { formatTemperature } from '../data/temperature.js'
 
-function CiudadPorDefecto({ city }) {
+function CiudadPorDefecto({ city, unidadTemperatura, onOpenSettings }) {
   const [weather, setWeather] = useState(null)
   const [error, setError] = useState('')
   const [attempt, setAttempt] = useState(0)
@@ -36,7 +37,7 @@ function CiudadPorDefecto({ city }) {
           <span className="home-header-label">Ciudad predeterminada</span>
           <span className="home-header-city">{city.name}</span>
         </div>
-        <button className="icon-btn" type="button" aria-label="Ajustes">
+        <button className="icon-btn" type="button" aria-label="Ajustes" onClick={onOpenSettings}>
           <Settings size={20} />
         </button>
       </header>
@@ -50,7 +51,7 @@ function CiudadPorDefecto({ city }) {
           >
             <Icon size={48} />
           </div>
-          <div className="weather-hero-temp">{weather.tempC}°C</div>
+          <div className="weather-hero-temp">{formatTemperature(weather.tempC, unidadTemperatura)}</div>
           <div className="weather-hero-condition">{weather.condition}</div>
         </section>
       )}

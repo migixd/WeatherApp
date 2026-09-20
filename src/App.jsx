@@ -4,16 +4,23 @@ import SearchScreen from './components/SearchScreen.jsx'
 import ListaCiudades from './components/ListaCiudades.jsx'
 import EliminarCiudad from './components/EliminarCiudad.jsx'
 import CiudadPredeterminada from './components/CiudadPredeterminada.jsx'
+import Ajustes from './components/Ajustes.jsx'
 import { loadCities, saveCities } from './data/citiesStore.js'
+import { loadUnit, saveUnit } from './data/temperatureStore.js'
 
 function App() {
   const [screen, setScreen] = useState('home')
   const [citiesData, setCitiesData] = useState(loadCities)
   const [searchFrom, setSearchFrom] = useState(null)
+  const [unidadTemperatura, setUnidadTemperatura] = useState(loadUnit)
 
   useEffect(() => {
     saveCities(citiesData)
   }, [citiesData])
+
+  useEffect(() => {
+    saveUnit(unidadTemperatura)
+  }, [unidadTemperatura])
 
   const defaultCity =
     citiesData.cities.find((c) => c.id === citiesData.defaultCityId) ?? null
@@ -62,6 +69,10 @@ function App() {
     setScreen('home')
   }
 
+  const handleSetUnit = (unit) => {
+    setUnidadTemperatura(unit)
+  }
+
   if (screen === 'search') {
     return (
       <div className="app-phone">
@@ -69,6 +80,7 @@ function App() {
           onBack={() => setScreen(searchFrom === 'cities' ? 'cities' : 'home')}
           onAddCity={handleAddCity}
           cities={citiesData.cities}
+          unidadTemperatura={unidadTemperatura}
         />
       </div>
     )
@@ -85,6 +97,7 @@ function App() {
             setSearchFrom('cities')
             setScreen('search')
           }}
+          unidadTemperatura={unidadTemperatura}
         />
       </div>
     )
@@ -116,13 +129,28 @@ function App() {
     )
   }
 
+  if (screen === 'ajustes') {
+    return (
+      <div className="app-phone">
+        <Ajustes
+          unidadTemperatura={unidadTemperatura}
+          onSetUnit={handleSetUnit}
+          onBack={() => setScreen('home')}
+        />
+      </div>
+    )
+  }
+
   return (
     <Home
       defaultCity={defaultCity}
+      unidadTemperatura={unidadTemperatura}
+      onSetUnit={handleSetUnit}
       onSearchClick={() => setScreen('search')}
       onCitiesClick={() => setScreen('cities')}
       onDeleteClick={() => setScreen('delete')}
       onSetDefaultClick={() => setScreen('setDefault')}
+      onOpenSettings={() => setScreen('ajustes')}
     />
   )
 }

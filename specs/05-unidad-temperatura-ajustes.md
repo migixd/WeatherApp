@@ -1,6 +1,6 @@
 # SPEC 05 — Pantalla de Ajustes con unidad de temperatura (°C/°F)
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 01, SPEC 02, SPEC 03, SPEC 04
 > **Fecha:** 2026-09-19
 > **Objetivo:** Agregar a WeatherApp una pantalla Ajustes para elegir la unidad de temperatura (°C/°F) persistida, que formatea el clima en el Home, la lista de ciudades y el buscador.

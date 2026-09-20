@@ -1,7 +1,7 @@
 import { CloudSun, Search, Trash2, Star } from 'lucide-react'
 import CiudadPorDefecto from './CiudadPorDefecto.jsx'
 
-function Home({ onSearchClick, onCitiesClick, onDeleteClick, onSetDefaultClick, defaultCity }) {
+function Home({ onSearchClick, onCitiesClick, onDeleteClick, onSetDefaultClick, defaultCity, unidadTemperatura, onOpenSettings }) {
   const tiles = [
     { icon: CloudSun, label: 'Todas las ciudades', onClick: onCitiesClick },
     { icon: Search, label: 'Buscar y agregar', onClick: onSearchClick },
@@ -11,7 +11,7 @@ function Home({ onSearchClick, onCitiesClick, onDeleteClick, onSetDefaultClick, 
 
   return (
     <div className="app-phone">
-      <CiudadPorDefecto city={defaultCity} />
+      <CiudadPorDefecto city={defaultCity} unidadTemperatura={unidadTemperatura} onOpenSettings={onOpenSettings} />
       <div className="menu-grid">
         {tiles.map((tile) => {
           const TileIcon = tile.icon
